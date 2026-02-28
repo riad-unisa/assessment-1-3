@@ -24,6 +24,92 @@
         --c-cyan: rgb(42,161,152);
         --c-green: rgb(133,153,0);
       }
+      /* 1) Page background + max width */
+body{
+  background: var(--c-background-color);
+  color: var(--base-font-color);
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 16px;
+  font-family: "Open Sans Condensed", Arial, sans-serif;
+}
+
+/* 2) Header + footer background colours */
+header, footer{
+  background: var(--c-background-highlights);
+  color: var(--base-font-color);
+  padding: 16px;
+}
+
+/* 3) Header centered + bigger + yellow heading */
+header{
+  text-align: center;
+  font-size: 150%;
+}
+header h1{
+  color: var(--c-yellow);
+  margin: 0;
+}
+
+/* 4) Main layout: article left, aside right */
+main{
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+article{
+  flex: 3;
+}
+
+aside{
+  flex: 1;
+  color: var(--c-green);
+}
+
+/* 5) Links in article magenta + hover orange */
+article a{
+  color: var(--c-magenta);
+}
+article a:hover{
+  color: var(--c-orange);
+}
+
+/* 6) Aside links red + hover blue */
+aside a{
+  color: var(--c-red);
+}
+aside a:hover{
+  color: var(--c-blue);
+}
+
+/* 7) Remove bullets from nav list + center using flex */
+nav ul{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+}
+
+nav li{
+  text-align: center;
+}
+
+/* 8) Article headings top padding */
+article h2, article h3{
+  padding-top: 50px;
+}
+
+/* 9) Border around each subsection (we don’t have <section>, so target the h3 blocks) */
+article section{
+  border: 3px solid var(--c-cyan);
+  padding: 12px;
+  margin-top: 20px;
+}
+
     </style>
 
   </head>
@@ -60,17 +146,17 @@
 
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Donec a diam lectus. Set sit amet ipsum mauris. Maecenas congue ligula as quam viverra nec consectetur ant hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur.</p>
 
-        <h3>Subsection</h3>
+        <section>
+  <h3>Subsection</h3>
+  <p>...</p>
+  <p>...</p>
+</section>
 
-        <p>Donec ut librero sed accu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aenean ut gravida lorem. Ut turpis felis, pulvinar a semper sed, adipiscing id dolor.</p>
-
-        <p>Pelientesque auctor nisi id magna consequat sagittis. Curabitur dapibus, enim sit amet elit pharetra tincidunt feugiat nist imperdiet. Ut convallis libero in urna ultrices accumsan. Donec sed odio eros.</p>
-
-        <h3>Another subsection</h3>
-
-        <p>Donec viverra mi quis quam pulvinar at malesuada arcu rhoncus. Cum soclis natoque penatibus et manis dis parturient montes, nascetur ridiculus mus. In rutrum accumsan ultricies. Mauris vitae nisi at sem facilisis semper ac in est.</p>
-
-        <p>Vivamus fermentum semper porta. Nunc diam velit, adipscing ut tristique vitae sagittis vel odio. Maecenas convallis ullamcorper ultricied. Curabitur ornare, ligula semper consectetur sagittis, nisi diam iaculis velit, is fringille sem nunc vet mi.</p>
+       <section>
+  <h3>Another subsection</h3>
+  <p>...</p>
+  <p>...</p>
+</section>
       </article>
 
       <!-- the aside content can also be nested within the main content -->
