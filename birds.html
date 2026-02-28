@@ -8,16 +8,14 @@
     <style>
       /* ===== Theme palettes (5 colours each) ===== */
       :root {
-        /* LIGHT theme */
         --primary-color: #1f6feb;
-        --secondary-color: #2ea043;
+        --secondary-color: #22a043;
         --bg-color: #ffffff;
         --font-color: #1f2328;
         --heading-color: #0b3d91;
       }
 
       [data-theme="dark"] {
-        /* DARK theme */
         --primary-color: #58a6ff;
         --secondary-color: #3fb950;
         --bg-color: #0d1117;
@@ -25,7 +23,6 @@
         --heading-color: #f0f6fc;
       }
 
-      /* ===== Page styling using variables ===== */
       body {
         margin: 0;
         font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -35,22 +32,22 @@
       }
 
       header {
-        padding: 20px;
-        border-bottom: 1px solid rgba(127, 127, 127, 0.25);
+        padding: 16px 20px;
         display: flex;
-        gap: 12px;
         align-items: center;
         justify-content: space-between;
+        gap: 12px;
+        border-bottom: 1px solid rgba(127, 127, 127, 0.25);
       }
 
-      header h1 {
+      h1 {
         margin: 0;
         color: var(--heading-color);
         font-size: 1.4rem;
       }
 
       main {
-        max-width: 900px;
+        max-width: 800px;
         margin: 0 auto;
         padding: 20px;
       }
@@ -59,7 +56,6 @@
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
-        align-items: center;
         margin-bottom: 16px;
       }
 
@@ -76,17 +72,7 @@
         border-color: var(--primary-color);
       }
 
-      button.primary {
-        background: var(--primary-color);
-        color: white;
-        border-color: var(--primary-color);
-      }
-
-      button.primary:hover {
-        filter: brightness(0.95);
-      }
-
-      .viewer {
+      .card {
         border: 1px solid rgba(127, 127, 127, 0.25);
         border-radius: 14px;
         padding: 14px;
@@ -95,60 +81,53 @@
       img {
         display: block;
         width: 100%;
-        max-width: 700px;
+        max-width: 720px;
         height: auto;
         border-radius: 12px;
-        border: 2px solid rgba(127, 127, 127, 0.25);
       }
 
-      p {
-        margin: 10px 0 0;
-        color: var(--font-color);
+      .credit {
+        margin-top: 10px;
       }
 
       .hint {
-        margin-top: 14px;
+        margin-top: 10px;
         color: rgba(127, 127, 127, 0.9);
         font-size: 0.95rem;
       }
 
-      .badge {
-        display: inline-block;
-        padding: 2px 10px;
-        border-radius: 999px;
-        background: rgba(127, 127, 127, 0.15);
-        margin-left: 8px;
-        font-size: 0.85rem;
+      #toggleThemeBtn {
+        border-color: var(--secondary-color);
+        color: var(--secondary-color);
+      }
+
+      #toggleThemeBtn:hover {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
       }
     </style>
   </head>
 
   <body>
     <header>
-      <h1>
-        Bird Image Selector
-        <span class="badge" id="themeBadge">Theme: Light</span>
-      </h1>
-
-      <!-- REQUIRED: A button to toggle theme -->
-      <button class="primary" id="toggleThemeBtn" type="button">Toggle Theme</button>
+      <h1>Bird Image Selector</h1>
+      <button id="toggleThemeBtn" type="button">Toggle Theme</button>
     </header>
 
     <main>
-      <!-- REQUIRED: 5 buttons with bird names -->
-      <section class="controls" aria-label="Bird selection buttons">
-        <button type="button" class="birdBtn" data-bird="pardalote">Pardalote</button>
-        <button type="button" class="birdBtn" data-bird="swamphen">Purple Swamp Hen</button>
-        <button type="button" class="birdBtn" data-bird="stilt">White-headed Stilt</button>
-        <button type="button" class="birdBtn" data-bird="thornbill">Inland Thornbill</button>
-        <button type="button" class="birdBtn" data-bird="robin">Rose Robin</button>
-      </section>
+      <div class="controls">
+        <button type="button" data-bird="pardalote">Pardalote</button>
+        <button type="button" data-bird="swamphen">Purple Swamp Hen</button>
+        <button type="button" data-bird="stilt">White-headed Stilt</button>
+        <button type="button" data-bird="thornbill">Inland Thornbill</button>
+        <button type="button" data-bird="robin">Rose Robin</button>
+      </div>
 
-      <!-- REQUIRED: one img above one p -->
-      <section class="viewer">
-        <img id="birdImage" src="" alt="Selected bird" />
-        <p id="birdCaption"></p>
-      </section>
+      <div class="card">
+        <!-- Exactly ONE img and ONE p -->
+        <img id="birdImg" src="http://www.outgrabe.net/bird00.jpg" alt="Pardalote" />
+        <p id="birdCredit" class="credit">Pardalote by fir0002 (CC-by-NC)</p>
+      </div>
 
       <p class="hint">
         Click a bird button to change the image and photographer credit. Use “Toggle Theme” to switch styles.
@@ -156,74 +135,58 @@
     </main>
 
     <script>
-      // Bird data (matches your table exactly)
+      // Bird switching functionality
       const birds = {
         pardalote: {
-          name: "Pardalote",
-          img: "http://www.outgrabe.net/bird00.jpg",
-          text: "Pardalote by fir0002 (CC-by-NC)",
+          src: "http://www.outgrabe.net/bird00.jpg",
+          alt: "Pardalote",
+          credit: "Pardalote by fir0002 (CC-by-NC)",
         },
         swamphen: {
-          name: "Purple Swamp Hen",
-          img: "http://www.outgrabe.net/bird01.jpg",
-          text: "Purple swamp hen by Toby Hudson (CC-by-SA)",
+          src: "http://www.outgrabe.net/bird01.jpg",
+          alt: "Purple Swamp Hen",
+          credit: "Purple swamp hen by Toby Hudson (CC-by-SA)",
         },
         stilt: {
-          name: "White-headed Stilt",
-          img: "http://www.outgrabe.net/bird02.jpg",
-          text: "White-headed Stilt by JJ Harrison (CC-by-SA)",
+          src: "http://www.outgrabe.net/bird02.jpg",
+          alt: "White-headed Stilt",
+          credit: "White-headed Stilt by JJ Harrison (CC-by-SA)",
         },
         thornbill: {
-          name: "Inland Thornbill",
-          img: "http://www.outgrabe.net/bird03.jpg",
-          text: "Inland Thornbill by Peter Jacobs (CC-by-SA)",
+          src: "http://www.outgrabe.net/bird03.jpg",
+          alt: "Inland Thornbill",
+          credit: "Inland Thornbill by Peter Jacobs (CC-by-SA)",
         },
         robin: {
-          name: "Rose Robin",
-          img: "http://www.outgrabe.net/bird04.jpg",
-          text: "Rose Robin by JJ Harrison (CC-by-SA)",
+          src: "http://www.outgrabe.net/bird04.jpg",
+          alt: "Rose Robin",
+          credit: "Rose Robin by JJ Harrison (CC-by-SA)",
         },
       };
 
-      const imgEl = document.getElementById("birdImage");
-      const captionEl = document.getElementById("birdCaption");
-      const buttons = document.querySelectorAll(".birdBtn");
-      const toggleThemeBtn = document.getElementById("toggleThemeBtn");
-      const themeBadge = document.getElementById("themeBadge");
+      // Elements (must exist)
+      const imgEl = document.getElementById("birdImg");
+      const creditEl = document.getElementById("birdCredit");
 
-      function showBird(key) {
-        const bird = birds[key];
-        imgEl.src = bird.img;
-        imgEl.alt = bird.name;
-        captionEl.textContent = bird.text;
-      }
-
-      // Default bird (allowed: any one)
-      showBird("pardalote");
-
-      // Button click handlers
-      buttons.forEach((btn) => {
+      // Button click: change ONE img + ONE p
+      document.querySelectorAll("button[data-bird]").forEach((btn) => {
         btn.addEventListener("click", () => {
           const key = btn.getAttribute("data-bird");
-          showBird(key);
+          const bird = birds[key];
+
+          imgEl.src = bird.src;
+          imgEl.alt = bird.alt;
+          creditEl.textContent = bird.credit;
         });
       });
 
       // Theme toggle
-      function updateThemeLabel(theme) {
-        themeBadge.textContent = theme === "dark" ? "Theme: Dark" : "Theme: Light";
-      }
-
-      toggleThemeBtn.addEventListener("click", () => {
-        const htmlEl = document.documentElement;
-        const current = htmlEl.getAttribute("data-theme");
-        const next = current === "dark" ? "light" : "dark";
-        htmlEl.setAttribute("data-theme", next);
-        updateThemeLabel(next);
+      const toggleBtn = document.getElementById("toggleThemeBtn");
+      toggleBtn.addEventListener("click", () => {
+        const root = document.documentElement; // <html>
+        const current = root.getAttribute("data-theme") || "light";
+        root.setAttribute("data-theme", current === "dark" ? "light" : "dark");
       });
-
-      // Set label on load
-      updateThemeLabel(document.documentElement.getAttribute("data-theme"));
     </script>
   </body>
 </html>
